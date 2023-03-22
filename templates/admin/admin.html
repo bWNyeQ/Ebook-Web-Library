@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block breadcrumb %}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item" active aria-current="page">Admin</li>
+    </ol>
+</nav>
+
+{% endblock %}
+
+{% block content %}
+    <h1>Admin panel</h1>
+    <div class="container">
+        <h2>Tools</h2>
+        <a class="btn btn-primary" href="/admin/upload">Upload</a>
+        <a class="btn btn-primary" href="/admin/users">User</a>
+        <a class="btn btn-primary" href="/admin/books">Book</a>
+        <a class="btn btn-primary" href="/admin/history">History</a>
+    </div>
+{% endblock %}

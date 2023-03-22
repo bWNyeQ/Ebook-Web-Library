@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block breadcrumb %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
+        <li class="breadcrumb-item" active aria-current="page">Users</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+
+{% block content %}
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Email</th>
+        <th scope="col">Password</th>
+        <th scope="col">Activated</th>
+        <th scope="col">Last logged in</th>
+        <th scope="col">Options</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <th scope="row">{{user.id}}</th>
+            <td>{{user.email}}</td>
+            <td>{{user.password}}</td>
+            <td>{{user.activated}}</td>
+            <td>{{user.last_loggedin if user.last_loggedin else 'Never'}}</td>
+            <td>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    {% if user.is_activated %}
+                    <a class="btn btn-primary" href="{{url_for('admin.deactivate',userId = user.id)}}"> Dectivate </a>
+                    {% else %}
+                    <a class="btn btn-warning" href="{{url_for('admin.activate',userId = user.id)}}"> Activate </a>
+                    {% endif %}
+                    <a class="btn btn-secondary" href="/admin/users/edit/{{user.id}}"> Edit </a>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="/admin/users/new">
+    <button type="button" class="btn btn-primary">Add new user</button>
+</a>
+
+{% endblock %}

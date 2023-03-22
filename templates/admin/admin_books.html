@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+
+{% block breadcrumb %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
+        <li class="breadcrumb-item" active aria-current="page">Books</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+
+<h3>Images</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Filename</th>
+      <th scope="col">Info</th>
+    </tr>
+  </thead>
+  <tbody>
+      {% for file in files %}
+      <tr>
+          <th scope="row">{{files.index(file)}}</th>
+          <td>
+            <a href="{{url_for('admin.view', file=file.filename)}}">{{file.filename}}</a>
+          </td>
+          <td scope="col">
+            {% if file.is_missing_parent %}
+            <p>Missing Parent!</p>
+            {% endif %}
+          </td>
+          <td scope="col">
+            {% if file.is_missing_parent %}
+            <a href="{{url_for('admin.books_new', pdf=file.filename)}}">Make new book</a>
+            {% endif %}
+          </td>
+      </tr>
+      {% endfor %}
+  </tbody>
+</table>
+
+<h3>PDF:s</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Filename</th>
+      <th scope="col">Info</th>
+    </tr>
+  </thead>
+  <tbody>
+      {% for file in pdfs  %}
+      <tr>
+          <th scope="row">{{pdfs.index(file)}}</th>
+          <td>
+            <a href="{{url_for('admin.view', file=file.filename)}}">{{file.filename}}</a>
+          </td>
+          <td scope="col">
+            {% if file.is_missing_parent %}
+            <p>Missing Parent!</p>
+            {% endif %}
+          </td>
+          <td scope="col">
+            {% if file.is_missing_parent %}
+            <a href="{{url_for('admin.books_new', pdf=file.filename)}}">Make new book</a>
+            {% endif %}
+          </td>
+      </tr>
+      {% endfor %}
+  </tbody>
+</table>
+
+<h3>Book items</h3>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Filename</th>
+        <th scope="col">Cover Filename</th>
+        <th scope="col">Info</th>
+        <th scope="col">Options</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for book in books %}
+        <tr>
+            <th scope="row">{{book.id}}</th>
+            <td>{{book.filename}}</td>
+            <td>{{book.cove_filename}}</td>
+            <td>
+              {% if book.is_missing_cover %}
+              <p>Missing Cover!</p>
+              {% endif %}
+              {% if book.is_missing_pdf %}
+              <p>Missing PDF!</p>
+              {% endif %}
+            </td>
+            <td>
+              <div class="btn-group" role="group" aria-label="Basic example">
+                {% if book.is_visable %}
+                <a class="btn btn-primary" href="{{url_for('admin.books_deactivate', bookId=book.id)}}">Visable</a>
+                {% else %}
+                <a class="btn btn-secondary" href="{{url_for('admin.books_activate', bookId=book.id)}}">Hidden</a>
+                {% endif %}
+                <a class="btn btn-warning" href="{{url_for('admin.books_delete', bookId=book.id)}}">Delete</a>
+              </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a class="btn btn-primary" href="{{url_for('admin.books_new')}}">New book</a>
+{% endblock %}

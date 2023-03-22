@@ -1,0 +1,42 @@
+{% extends '_origin.html' %}
+
+{% block main %}
+
+{% include '_parts/nav.html' %}
+
+<div class="container">
+    {% for category, message in get_flashed_messages(with_categories=true) %}
+    <div style="width: 100%" id="toast" role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-bs-autohide="false">
+        <div class="toast-header {{'text-bg-primary' if category != 'error' else 'text-bg-warning'}}">
+          <strong class="me-auto">Message from the server...</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+          {{ message }}
+        </div>
+    </div>
+    {% endfor %}    
+</div>
+
+<div class="container mt-2">
+
+  {% block breadcrumb %} {% endblock %}
+
+  {% block content %} {% endblock %} 
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+
+<script>
+    const toastLiveExample = document.getElementsByClassName('toast')
+    console.log(toastLiveExample)
+    for (let element of toastLiveExample){
+      const toast = new bootstrap.Toast(element)
+      toast.show()
+    };
+
+</script>
+
+{% endblock %}

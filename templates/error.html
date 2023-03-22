@@ -1,0 +1,9 @@
+{% extends '_origin.html' %}
+
+{% block main %}
+<div>
+    <h1>{{msg}}</h1>
+    <span>Whoops! Something went wrong, try go back to the main page.</span>
+    <a href="{{url_for('user.index')}}" class="btn btn-primary" >Go back</a>    
+</div>
+{% endblock %}

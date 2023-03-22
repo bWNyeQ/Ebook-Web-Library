@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Library</h1>
+
+<div class="container">
+    <div class="d-flex flex-wrap">
+        {% for book in books %}
+            <div class="card m-3" style="width: 18rem;">
+                <img src="{{url_for('user.viewCover', bookId=book.id)}}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">{{book.filename}}</h5>
+                  <p class="card-text">{{book.desc}}</p>
+                  <a href="{{url_for('user.view', bookId=book.id)}}" class="btn btn-primary">View as PDF</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}
